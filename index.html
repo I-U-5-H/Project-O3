@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Project O3</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Marked to parse Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3c83f6",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0a0a0a",
+                        "sidebar-dark": "#171717",
+                        "card-dark": "#212121",
+                    },
+                    fontFamily: {
+                        "display": ["'Segoe UI Variable'", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4a4a4a;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #6a6a6a;
+        }
+
+        .markdown-body pre {
+            background: #1e1e1e !important;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            border: 1px solid #333;
+            margin-bottom: 1.25rem;
+        }
+
+        .markdown-body code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.85em;
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.15rem 0.3rem;
+            border-radius: 0.25rem;
+        }
+
+        .markdown-body pre code {
+            color: #e2e8f0;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.25rem;
+            line-height: 1.75;
+        }
+
+        .markdown-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .markdown-body ul,
+        .markdown-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 overflow-hidden">
+    <div class="flex h-screen w-full">
+        <!-- Sidebar -->
+        <aside class="hidden md:flex flex-col w-[260px] bg-sidebar-dark border-r border-slate-800/50 h-full">
+            <div class="p-4">
+                <button
+                    class="flex w-full items-center gap-3 rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium transition hover:bg-slate-800"
+                    onclick="window.location.reload()">
+                    <span class="material-symbols-outlined text-[20px]">add</span>
+                    <span>New Chat</span>
+                </button>
+            </div>
+            <!-- Chat History -->
+            <div class="flex-1 overflow-y-auto custom-scrollbar px-3 space-y-6">
+                <div>
+                    <h3 class="px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-2">Today</h3>
+                    <div class="space-y-1">
+                        <a class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 transition truncate"
+                            href="#">
+                            <span class="material-symbols-outlined text-[18px]">security</span>
+                            <span class="truncate">Project O3 Chat</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar Bottom -->
+            <div class="p-4 border-t border-slate-800">
+                <div class="flex items-center justify-between gap-3 px-2">
+                    <div class="flex items-center gap-2">
+                        <div class="size-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold"
+                            data-alt="User profile avatar circle"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD-T4CW6fcbSKnuNQllTbw_etrT_GRlRDzUipyYCDgSMHLUYroW3mOFNY1QCcCgYwqnMggGACWPk4xERRMYw8tqUID1dh6j1wsj03WSiSzO4SStCBVmDMePU_RofThhY1WAp7ueoT_enf9gbSc814byiCmR6NoHUAcU4yfBQ8W6CfPUFOGu6cxh8Gv2iXPToGVAZifeMD_6VK6nM7wDFxlTYv-Q-L4QCMB_qf8mcNUy4PyGefv_TBWMIB-2iegdemyq_KBqTMJR6oU')">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xs font-medium">Alex Rivera</span>
+                            <span class="text-[10px] text-slate-500">Free Plan</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button id="settings-btn"
+                            class="material-symbols-outlined text-slate-400 hover:text-white transition text-[20px]">settings</button>
+                        <button id="theme-toggle-btn"
+                            class="material-symbols-outlined text-slate-400 hover:text-white transition text-[20px]">light_mode</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col relative h-full">
+            <!-- Header -->
+            <header
+                class="h-14 flex items-center justify-between px-4 md:px-8 bg-background-dark/80 backdrop-blur-sm sticky top-0 z-10 border-b border-slate-800/20 md:border-none">
+                <button class="md:hidden material-symbols-outlined text-slate-400">menu</button>
+                <div class="flex items-center gap-2">
+                    <span
+                        class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400 md:hidden">Project
+                        O3</span>
+                    <span
+                        class="hidden md:block text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400 tracking-tight">Project
+                        O3</span>
+                </div>
+                <button id="export-btn" class="material-symbols-outlined text-slate-400 hover:text-white transition"
+                    title="Export Chat">ios_share</button>
+            </header>
+
+            <!-- Chat Scrollable Container -->
+            <div id="messages-container" class="flex-1 overflow-y-auto custom-scrollbar pb-32">
+                <!-- Empty State (Suggestion Cards) -->
+                <div id="empty-state" class="max-w-3xl mx-auto px-4 mt-20 md:mt-32">
+                    <div class="text-center mb-10">
+                        <h1 class="text-3xl md:text-4xl font-semibold mb-2">How can I help you today?</h1>
+                        <p class="text-slate-400 text-sm">I'm an AI agent that automatically detects and masks sensitive
+                            PII before processing.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="p-4 rounded-xl border border-slate-800 bg-card-dark hover:bg-slate-800/50 cursor-pointer transition group"
+                            onclick="fillInput('Check this server log for errors: user@example.com logged in with password Secret123!45')">
+                            <div class="flex justify-between items-start">
+                                <p class="text-sm font-medium text-slate-200">Analyze server logs securely</p>
+                                <span
+                                    class="material-symbols-outlined text-slate-500 opacity-0 group-hover:opacity-100 transition">arrow_upward</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">hides emails and passwords automatically</p>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-800 bg-card-dark hover:bg-slate-800/50 cursor-pointer transition group"
+                            onclick="fillInput('We have an exposed AWS key AKIAIOSFODNN7EXAMPLE in our source.')">
+                            <div class="flex justify-between items-start">
+                                <p class="text-sm font-medium text-slate-200">Sanitize source code</p>
+                                <span
+                                    class="material-symbols-outlined text-slate-500 opacity-0 group-hover:opacity-100 transition">arrow_upward</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">detect API keys and sensitive tokens</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conversation Section -->
+                <div id="chat-thread" class="hidden max-w-3xl mx-auto px-4 mt-8 space-y-8">
+                    <!-- Messages will be injected here -->
+                </div>
+            </div>
+
+            <!-- Input Zone -->
+            <div
+                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background-dark via-background-dark to-transparent pt-10 pb-6">
+                <div class="max-w-[800px] mx-auto px-4">
+                    <div
+                        class="relative flex items-end w-full bg-sidebar-dark border border-slate-700 rounded-2xl p-2 focus-within:border-slate-500 transition-colors">
+                        <input type="file" id="file-upload" class="hidden" multiple />
+                        <button id="add-resources-btn" class="p-2 text-slate-400 hover:text-white transition shrink-0"
+                            onclick="document.getElementById('file-upload').click()">
+                            <span class="material-symbols-outlined">attach_file</span>
+                        </button>
+                        <textarea id="chat-input"
+                            class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2 px-2 resize-none max-h-40 placeholder-slate-500 text-slate-200"
+                            placeholder="Message AI securely..." rows="1"></textarea>
+                        <div class="flex items-center gap-1 shrink-0 pb-1 pr-1">
+                            <button class="p-2 text-slate-400 hover:text-white transition">
+                                <span class="material-symbols-outlined text-[22px]">mic</span>
+                            </button>
+                            <button id="send-btn"
+                                class="p-2 bg-slate-100 text-slate-900 rounded-xl hover:bg-white transition flex items-center justify-center">
+                                <span class="material-symbols-outlined text-[20px] font-bold">arrow_upward</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-center text-slate-500 mt-2">AI automatically masks sensitive PII. Check
+                        important info.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const inputEl = document.getElementById("chat-input");
+        const sendBtn = document.getElementById("send-btn");
+        const threadEl = document.getElementById("chat-thread");
+        const emptyStateEl = document.getElementById("empty-state");
+        const messagesContainer = document.getElementById("messages-container");
+
+        // Auto resize textarea
+        inputEl.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+            if (this.value.trim() === '') {
+                this.style.height = 'auto';
+            }
+        });
+
+        // Enter to send
+        inputEl.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        sendBtn.addEventListener('click', sendMessage);
+
+        function fillInput(text) {
+            inputEl.value = text;
+            inputEl.focus();
+        }
+
+        async function sendMessage() {
+            const text = inputEl.value.trim();
+            if (!text) return;
+
+            // Hide empty state
+            emptyStateEl.classList.add('hidden');
+            threadEl.classList.remove('hidden');
+
+            // Add user msg
+            appendUserMessage(text);
+            inputEl.value = '';
+            inputEl.style.height = 'auto';
+
+            // Add loading state
+            const botLoadingId = 'loading-' + Date.now();
+            appendBotLoading(botLoadingId);
+            scrollToBottom();
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                const data = await res.json();
+
+                // Remove loading msg
+                document.getElementById(botLoadingId).remove();
+
+                // Append bot response
+                appendBotResponse(data);
+            } catch (err) {
+                console.error(err);
+                document.getElementById(botLoadingId).remove();
+                appendBotError();
+            }
+            scrollToBottom();
+        }
+
+        function appendUserMessage(text) {
+            const div = document.createElement('div');
+            div.className = "flex justify-end mb-8 mt-2";
+            div.innerHTML = `
+            <div class="bg-[#2a2a29] rounded-[24px] rounded-br-[8px] px-5 py-3 max-w-[85%] md:max-w-[75%]">
+                <p class="text-[15px] text-[#e3e3e3] whitespace-pre-wrap leading-relaxed">${escapeHTML(text)}</p>
+            </div>
+        `;
+            threadEl.appendChild(div);
+        }
+
+        function appendBotLoading(id) {
+            const div = document.createElement('div');
+            div.id = id;
+            div.className = "flex gap-5 mb-8 w-full";
+            div.innerHTML = `
+            <div class="shrink-0 pt-0.5 hidden md:block">
+                <span class="material-symbols-outlined text-blue-400 text-[24px] animate-pulse glow-effect">sparkle</span>
+            </div>
+            <div class="flex-1 pt-1">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-blue-400 text-[20px] animate-pulse md:hidden">sparkle</span>
+                    <p class="text-[15px] text-slate-400 animate-pulse">Thinking...</p>
+                </div>
+            </div>
+        `;
+            threadEl.appendChild(div);
+        }
+
+        function appendBotResponse(data) {
+            const div = document.createElement('div');
+            div.className = "flex gap-5 mb-14 flex-col md:flex-row w-full";
+
+            let maskedDebugHtml = "";
+
+            // Only show debug logic if something was detected
+            if (data.combined && Object.keys(data.combined).length > 0) {
+                let combinedDictHtml = "";
+                for (const [key, val] of Object.entries(data.combined)) {
+                    combinedDictHtml += `<div class="text-[12px]"><span class="text-red-400 font-medium">${escapeHTML(key)}</span> : <span class="text-slate-300">${val}</span></div>`;
+                }
+
+                maskedDebugHtml = `
+            <div class="bg-[#1a1a1a]/80 rounded-2xl p-4 mt-6 border border-slate-700/50 text-sm">
+                <p class="font-semibold text-slate-300 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px] text-green-400">security</span>
+                    Secure Middleware Trace
+                </p>
+                <div class="mb-2 text-slate-400 text-xs uppercase tracking-wider font-semibold">1. Sensitive Data Detected:</div>
+                <div class="pl-3 border-l-2 border-slate-700 space-y-1 mb-5">
+                    ${combinedDictHtml}
+                </div>
+                <div class="mb-2 text-slate-400 text-xs uppercase tracking-wider font-semibold">2. Cloud Processing Mask:</div>
+                <div class="text-slate-300 italic bg-black/50 p-3 rounded-xl border border-slate-800 text-sm leading-relaxed">${escapeHTML(data.masked_prompt)}</div>
+            </div>`;
+            }
+
+            const htmlContent = marked.parse(data.final_output || "");
+
+            div.innerHTML = `
+            <div class="shrink-0 pt-0.5 hidden md:block">
+                <span class="material-symbols-outlined text-blue-400 text-[24px]">sparkle</span>
+            </div>
+            <div class="flex-1 max-w-full overflow-hidden">
+                <div class="text-[15.5px] text-[#e3e3e3] markdown-body max-w-full break-words">
+                    ${htmlContent}
+                </div>
+                ${maskedDebugHtml}
+            </div>
+        `;
+            threadEl.appendChild(div);
+        }
+
+        function appendBotError() {
+            const div = document.createElement('div');
+            div.className = "flex gap-4 mb-6";
+            div.innerHTML = `
+            <div class="size-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-red-500 text-[20px]">error</span>
+            </div>
+            <div class="flex-1 space-y-4 pt-1">
+                <p class="text-sm text-red-400">An error occurred while connecting to the backend. Is the server running?</p>
+            </div>
+        `;
+            threadEl.appendChild(div);
+        }
+
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g,
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+
+        // Interactive Buttons Logic
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const htmlEl = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlEl.classList.contains('dark')) {
+                htmlEl.classList.remove('dark');
+                themeToggleBtn.innerText = 'dark_mode';
+            } else {
+                htmlEl.classList.add('dark');
+                themeToggleBtn.innerText = 'light_mode';
+            }
+        });
+
+        const exportBtn = document.getElementById('export-btn');
+        exportBtn.addEventListener('click', () => {
+            const textToExport = Array.from(threadEl.children).map(child => {
+                return child.innerText;
+            }).join('\\n\\n--- \\n\\n');
+
+            if (!textToExport.trim()) {
+                alert("No chat data to export!");
+                return;
+            }
+
+            const blob = new Blob([textToExport], { type: "text/plain;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "secure_chat_export.txt";
+            link.click();
+        });
+
+        const fileUpload = document.getElementById('file-upload');
+        fileUpload.addEventListener('change', (e) => {
+            const files = e.target.files;
+            if (files.length > 0) {
+                let fileNames = [];
+                for (let i = 0; i < files.length; i++) {
+                    fileNames.push(files[i].name);
+                }
+                alert(`Ready to upload resources:\\n${fileNames.join('\\n')}`);
+                // Note: Implementation requires backend support
+            }
+        });
+
+        const settingsBtn = document.getElementById('settings-btn');
+        settingsBtn.addEventListener('click', () => {
+            alert("Settings modal would open here to adjust DLP strictness.");
+        });
+    </script>
+</body>
+
+</html>
